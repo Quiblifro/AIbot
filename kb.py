@@ -10,8 +10,8 @@ buttons_1 = [
 ]
 levels = [
     [   
-        KeyboardButton(text="back"),
-        KeyboardButton(text="🔰Just started"),
+        KeyboardButton(text="🔙"),
+        KeyboardButton(text="🔰 Just started"),
         KeyboardButton(text="📕 Junior"),
         KeyboardButton(text="👔 Middle"),
         KeyboardButton(text="🎩 Senior"),

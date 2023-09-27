@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from states import MenuState
-from gptcontact import get
+from gptcontact import get_task
 import requests
 import asyncio
 import kb
@@ -30,7 +30,7 @@ async def isgenerated_handler(msg: Message, state : FSMContext):
 
 @router.message(MenuState.level)
 async def level_handler(msg: Message, state : FSMContext):
-    if msg.text == "🔰Just started":
+    if msg.text == "🔰 Just started":
         await state.update_data(level=1)
     elif msg.text == "📕 Junior":
         await state.update_data(level=2)
@@ -38,6 +38,12 @@ async def level_handler(msg: Message, state : FSMContext):
         await state.update_data(level=3)
     elif msg.text == "🎩 Senior":
         await state.update_data(level=4)
+    elif msg.text == "🔙":
+        await start_handler(msg, state)
+    
+
+#get_task
+
 
 
 
