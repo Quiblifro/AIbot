@@ -1,6 +1,6 @@
 from aiogram.types import  ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from callbacks import NotesCallbackFactory
+from callbacks import CallbackFactory
 
 buttons_1 = [
     [
@@ -21,10 +21,10 @@ problem_menu = ReplyKeyboardMarkup(keyboard=buttons_1, resize_keyboard=True, inp
 level_menu = ReplyKeyboardMarkup(keyboard=levels, resize_keyboard=True, input_field_placeholder="Ваш уровень в python?")
 
 
-def problem_nav(id):
+def problem_nav():
     builder = InlineKeyboardBuilder()
     
-    builder.button(text="⏹", callback_data=NotesCallbackFactory(action="stop"))
-    builder.button(text="⏩", callback_data=NotesCallbackFactory(action="next"))
+    builder.button(text="⏹", callback_data=CallbackFactory(action="stop"))
+    builder.button(text="⏩", callback_data=CallbackFactory(action="next"))
 
     return builder.as_markup()
