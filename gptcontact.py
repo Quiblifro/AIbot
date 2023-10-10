@@ -9,8 +9,9 @@ def get_task(level, theme=[]):
     
     # Define a default value for condit1
     condit1 = ''
-    
-    if level == 2:
+    if level == 1:
+        ...
+    elif level == 2:
         condit1 = '''составь задачу по python  , для человека хорошо знающего язык, задача должна быть не слишком простая'''
     elif level == 3:
         condit1 = '''составь задачу по python  , используя тонкие нюансы языка, используя встроенные библиотеки python, задача должна быть очень сложной'''
