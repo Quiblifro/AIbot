@@ -5,8 +5,6 @@ from aiogram.fsm.context import FSMContext
 from states import MenuState
 from gptcontact import get_task
 from callbacks import TasksCallbackFactory, ThemeCallbackFactory
-import requests
-import asyncio
 import kb
 router = Router()
 
