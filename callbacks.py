@@ -5,4 +5,5 @@ class TasksCallbackFactory(CallbackData, prefix="task"):
     action: str
 
 class ThemeCallbackFactory(CallbackData, prefix="theme"):
-    theme : str
+    theme : str 
+    is_continue : bool

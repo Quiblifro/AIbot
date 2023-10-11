@@ -28,12 +28,14 @@ async def isgenerated_handler(msg: Message, state : FSMContext):
     await msg.answer(f'🧠 Какой уровень знаний у тебя в python?', reply_markup=kb.level_menu)
     await state.set_state(MenuState.level)
 
-
+#get_task
 @router.message(MenuState.level)
 async def level_handler(msg: Message, state : FSMContext):
     is_continue = True
     if msg.text == "🔰 Just started":
         await state.update_data(level=1)
+        await state.update_data(theme=[])
+
         is_continue = False
 
     elif msg.text == "📕 Junior":
@@ -55,6 +57,7 @@ async def level_handler(msg: Message, state : FSMContext):
     print(data, is_continue)
     if data and is_continue:
         level = data.get("level")
+        theme = data
         await msg.answer(get_task(level), reply_markup=kb.problem_nav())
     else:
         await theme_handler(msg, state)
@@ -68,8 +71,31 @@ async def theme_handler(msg: Message, state : FSMContext):
 async def next_task(query: types.CallbackQuery, callback_data: TasksCallbackFactory, state: FSMContext):
     data = await state.get_data()
     level = data.get("level")
-    await query.message.edit_text(get_task(level), reply_markup=kb.problem_nav())
+    theme = data.get("theme")
+    await query.message.edit_text(get_task(level, theme), reply_markup=kb.problem_nav())
 
 @router.callback_query(TasksCallbackFactory.filter(F.action == "stop"))
 async def next_task(query: types.CallbackQuery, callback_data: TasksCallbackFactory, state: FSMContext):
     await start_handler(query.message, state)
+
+@router.callback_query(ThemeCallbackFactory.filter())
+async def get_theme(query: types.CallbackQuery, callback_data: ThemeCallbackFactory, state: FSMContext):
+    data = await state.get_data()
+    print(callback_data.is_continue)
+    if callback_data.is_continue:
+        level = data.get("level")
+        theme = data.get('theme')
+        print('я пытаюсь перейти на дпг')
+        await query.message.answer(get_task(level, theme), reply_markup=kb.problem_nav())
+    theme = callback_data.theme
+    themes = data.get('theme')
+    if theme in themes:
+        themes.remove(theme)
+    else:
+        themes.append(theme)
+
+    await query.message.edit_text(f'''
+**Вы выбрали**: 
+`{", ".join(themes)}`
+__\(нажми еще раз чтобы удалить\)__''', reply_markup=kb.theme_menu(themes))
+    

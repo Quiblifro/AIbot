@@ -1,7 +1,9 @@
 from aiogram.types import  ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from callbacks import TasksCallbackFactory, ThemeCallbackFactory
-
+themes = [
+    'условия', "циклы", "арифметика", "списки", "словари", "работа со стороками", "функции", "ООП", "рандомная тема"
+]
 buttons_1 = [
     [
         KeyboardButton(text="🤖 Сгенерировать задачу"),
@@ -28,17 +30,16 @@ def problem_nav():
 
     return builder.as_markup()
 
-def theme_menu():
-    builder = InlineKeyboardBuilder()
+def theme_menu(selected=[]):
+    markup = InlineKeyboardBuilder()
 
-    builder.button(text = "условия" , callback_data=ThemeCallbackFactory(theme="условия"))
-    builder.button(text = "циклы" , callback_data=ThemeCallbackFactory(theme="циклы"))
-    builder.button(text = "арифметика" , callback_data=ThemeCallbackFactory(theme="арифметика"))
-    builder.button(text = "списки" , callback_data=ThemeCallbackFactory(theme="списки"))
-    builder.button(text = "словари" , callback_data=ThemeCallbackFactory(theme="словари"))
-    builder.button(text = "работа со стороками" , callback_data=ThemeCallbackFactory(theme="строки"))
-    builder.button(text = "функции", callback_data=ThemeCallbackFactory(theme="функции"))
-    builder.button(text = "ООП", callback_data=ThemeCallbackFactory(theme="ООП"))
-    builder.button(text = "рандомная тема", callback_data=ThemeCallbackFactory(theme="stop"))
-
-    return builder.as_markup()
+    for theme in themes:
+        theme_text = theme
+        
+        if theme in selected:
+            theme_text += ' ❌'
+        markup.button(text = theme_text , callback_data=ThemeCallbackFactory(theme=theme , is_continue=False))
+        
+    markup.adjust(2)
+    markup.button(text = "дальше⏩", callback_data=ThemeCallbackFactory(theme = '', is_continue=True))
+    return markup.as_markup()
