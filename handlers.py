@@ -95,6 +95,6 @@ async def get_theme(query: types.CallbackQuery, callback_data: ThemeCallbackFact
 
     await query.message.edit_text(f'''
 Вы выбрали: 
-`{", ".join(themes)}`
+{", ".join(themes)}
 (нажми еще раз чтобы удалить)''', reply_markup=kb.theme_menu(themes))
     
