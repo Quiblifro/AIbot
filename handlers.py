@@ -85,7 +85,6 @@ async def get_theme(query: types.CallbackQuery, callback_data: ThemeCallbackFact
     if callback_data.is_continue:
         level = data.get("level")
         theme = data.get('theme')
-        print('я пытаюсь перейти на дпг')
         await query.message.answer(get_task(level, theme), reply_markup=kb.problem_nav())
     theme = callback_data.theme
     themes = data.get('theme')
@@ -95,7 +94,7 @@ async def get_theme(query: types.CallbackQuery, callback_data: ThemeCallbackFact
         themes.append(theme)
 
     await query.message.edit_text(f'''
-**Вы выбрали**: 
+Вы выбрали: 
 `{", ".join(themes)}`
-__\(нажми еще раз чтобы удалить\)__''', reply_markup=kb.theme_menu(themes))
+(нажми еще раз чтобы удалить)''', reply_markup=kb.theme_menu(themes))
     
