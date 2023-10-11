@@ -1,4 +1,4 @@
 aiogram
 openai 
-dotenv
+pyhton-dotenv
 asyncio
